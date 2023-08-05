@@ -1,0 +1,50 @@
+%
+% About image
+%
+
+% image in line
+\newlength\myheight
+\newlength\mydepth
+\settototalheight\myheight{Xygp}
+\settodepth\mydepth{Xygp}
+\setlength\fboxsep{0pt}
+\newcommand*\inlinegraphics[1]{%
+  \settototalheight\myheight{Xygp}%
+  \settodepth\mydepth{Xygp}%
+  \raisebox{-\mydepth}{\includegraphics[height=\myheight]{#1}}%
+}
+% useage
+% This should adapt \inlinegraphics{example-image-a}.
+
+
+
+% Define macros make it easier to insert images
+\usepackage{expkv-cs}
+\makeatletter
+\newcommand\fig[2][]{\fig@kv{short={#2},#1}{#2}}
+\ekvcSplitAndForward\fig@kv\fig@out
+{
+  % defaults here
+  short = {}% will get set for each call to match the caption argument
+  ,internal-label = {} % empty, not for direct use (easier that way)
+  ,place = tbp
+  ,...
+}
+\ekvcSecondaryKeys\fig@kv
+{
+  nmeta H = place=H % shortcut
+  ,meta label = internal-label=\label{#1} % wraps \label around the value
+  % add more keys you want to be handled special here
+}
+\newcommand\fig@out[6]
+{%
+  \begin{figure}[#3]
+    \centering
+    \includegraphics[{#4}]{#6}%
+    \caption[{#1}]{#5#2}%
+  \end{figure}%
+}
+\makeatother
+% useage
+%\fig{A lovely duck}{img/line2}
+%\fig[width=3cm, short=Ducky,label=fig:1]{A frightening duck!}{img/line2}

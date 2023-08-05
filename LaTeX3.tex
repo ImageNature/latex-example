@@ -1,0 +1,54 @@
+%
+% LaTeX3 programming syntax 
+%
+
+\documentclass{ctexart}
+\usepackage{xcolor}
+\usepackage{lipsum}
+
+% Conditional  syntax 
+\ExplSyntaxOn
+\NewDocumentCommand{\iften}{m}
+{
+  \int_compare:nNnTF { #1 } = { 1 }
+  {
+    \color{red} % A sentence
+  }
+  {
+    \color{blue} % B sentence
+  }
+}
+\ExplSyntaxOff
+
+
+
+% Branch  syntax 
+\ExplSyntaxOn
+\NewDocumentCommand{\casess}{m}
+{
+  \int_case:nn { #1 }
+  {
+    {1} { \color{red} }
+    {2} { \color{blue} }
+  }
+}
+\ExplSyntaxOff
+
+
+
+\iften{2}
+
+
+\title{\LaTeX3 syntax}
+\author{ImageNature}
+\begin{document}
+\maketitle
+
+\iften{2}
+\lipsum[2]
+
+\casess{1}
+\lipsum[2]
+
+
+\end{document}

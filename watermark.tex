@@ -1,0 +1,41 @@
+%
+% Watermark
+%
+\documentclass{article}
+\usepackage[contents={}]{background}
+\usepackage{lipsum}
+
+
+% watermark from second to last page
+\AddEverypageHook{
+  \ifnum\value{page}=1\relax
+  \else
+  \backgroundsetup{contents={\textcolor[gray]{0.80}{my text}}}
+  \fi
+  \BgMaterial
+}
+
+
+% arxiv style for watermark
+\usepackage{draftwatermark}
+\SetWatermarkText{Draft: \today}
+\SetWatermarkColor[gray]{0.5}
+\SetWatermarkFontSize{1cm}
+\SetWatermarkAngle{90}
+\SetWatermarkHorCenter{20cm}
+
+
+% plain LaTeX
+\makeatletter
+\newcommand{\watermarktext}{Draft} % define  text of watermark
+\g@addto@macro{\@outputpage}{%
+  \begin{picture}(0,0)
+    \put(140,-350){\rotatebox{60}{\textcolor[gray]{0.95}{\scalebox{5}{\watermarktext}}}}
+\end{picture}}
+\makeatother
+
+\begin{document}
+
+  \lipsum[1-30]
+
+\end{document}
