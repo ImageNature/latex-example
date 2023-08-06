@@ -1,0 +1,51 @@
+%
+% LaTeX3 parameters of one command are passed to more commands
+%  similar to python Lexicographic order
+%
+
+\documentclass[12pt]{article}
+
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\combined}{m}{
+  \Choose{#1}
+  \colortest{#1}
+}
+
+\NewDocumentCommand{\Choose}{m}%
+{
+  \int_case:nn { #1 }
+  {
+    {1}
+    {%English
+      \newtheorem{defi}{Definition}                % definition
+    }
+    {2}
+    {%Chinese
+      \newtheorem{defi}{定义}                % definition
+    }
+  }
+}
+
+
+\NewDocumentCommand{\colortest}{m}{
+  \int_case:nnF { #1 }
+  {
+    {1}{\textcolor{green}{green}}
+    {2}{\textcolor{red}{red}}
+  } {undefined}
+}
+
+\ExplSyntaxOff
+
+
+
+\begin{document}
+
+  \combined{1}
+
+\end{document}
